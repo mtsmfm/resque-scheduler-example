@@ -24,6 +24,10 @@ services:
       REDIS_URL: redis://redis
       QUEUE: "*"
     ports: []
+  scheduler:
+    <<: *web
+    command: bin/rake environment resque:scheduler
+    ports: []
   db:
     image: postgres
   redis:

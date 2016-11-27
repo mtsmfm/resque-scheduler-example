@@ -46,4 +46,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'resque', require: %w(resque resque/server)
+gem 'resque-scheduler'
 gem 'sinatra', '>= 2.0.0.beta2'
