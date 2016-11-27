@@ -1,6 +1,6 @@
 version: '2'
 services:
-  web:
+  web: &web
     build:
       context: .
       args:
@@ -10,12 +10,24 @@ services:
     command: bin/rails s -b 0.0.0.0 -p 3000
     environment:
       DATABASE_URL: postgres://postgres:@db
+      REDIS_URL: redis://redis
     ports:
       - 3000:3000
     depends_on:
       - db
+      - redis
+  worker:
+    <<: *web
+    command: bin/rails environment resque:work
+    environment:
+      DATABASE_URL: postgres://postgres:@db
+      REDIS_URL: redis://redis
+      QUEUE: "*"
+    ports: []
   db:
     image: postgres
+  redis:
+    image: redis
 volumes:
   bundle:
   node:
